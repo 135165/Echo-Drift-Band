@@ -1,0 +1,214 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Echo Drift Band</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #121212;
+      color: #fff;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      padding: 10px 20px;
+      background: #1f1f1f;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+    header img {
+      height: 40px;
+      border-radius: 8px;
+    }
+    header h1 {
+      margin-left: 15px;
+      font-size: 24px;
+    }
+    .song-card {
+      display: flex;
+      align-items: center;
+      background: #1e1e1e;
+      margin: 15px;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #000;
+    }
+    .song-card {
+      display: flex;
+      align-items: center;
+      background: #1e1e1e;
+      margin: 15px;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #000;
+    }
+    .song-card img {
+      width: 60px;
+      height: 60px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+    .song-info {
+      flex: 1;
+      margin-left: 15px;
+    }
+    .song-info h3 {
+      margin: 0;
+      font-size: 18px;
+    }
+    .song-actions {
+      display: flex;
+      align-items: center;
+    }
+    .song-actions button {
+      margin-left: 10px;
+      background: #00cc66;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .song-actions .circle {
+      position: relative;
+      width: 50px;
+      height: 50px;
+    }
+    .song-actions svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+</style>
+</head>
+<body><header>
+  <img src="logo.jpg" alt="Echo Drift Logo">
+  <h1>Echo Drift Band</h1>
+</header><div class="song-card">
+  <img src="singer1.jpg" alt="Singer">
+  <div class="song-info">
+    <h3>Echo Drift – Fire In Me</h3>
+    <audio id="player1" src="song1.mp3"></audio>
+  </div>
+  <div class="song-actions">
+    <button id="playBtn1" onclick="togglePlay('player1', 'playBtn1')">▶</button>
+    <div class="circle">
+      <svg width="50" height="50">
+        <circle id="ring1" cx="25" cy="25" r="22" stroke="#00ffcc" stroke-width="4" fill="none"
+          stroke-dasharray="138" stroke-dashoffset="138" style="transition: stroke-dashoffset 0.2s;"></circle>
+      </svg>
+      <button onclick="startDownload('song1.mp3','ring1')" style="position:absolute; top:0; left:0; width:100%; height:100%; border:none; background:none; color:white;">⬇</button>
+    </div>
+</div>
+</div><script>
+function togglePlay(playerId, btnId) {
+  const player = document.getElementById(playerId);
+  const button = document.getElementById(btnId);
+
+  document.querySelectorAll('audio').forEach(audio => {
+    if (audio.id !== playerId) audio.pause();
+  });
+  document.querySelectorAll('button').forEach(btn => {
+    if (btn.id !== btnId && btn.textContent === "⏸") btn.textContent = "▶";
+  });
+
+  if (player.paused) {
+    player.play();
+    button.textContent = "⏸";
+  } else {
+    player.pause();
+    button.textContent = "▶";
+  }
+}
+function startDownload(file, ringId) {
+    const ring = document.getElementById(ringId);
+    ring.style.display = 'block';
+    ring.setAttribute('stroke-dashoffset', '138');
+
+    let progress = 0;
+    const interval = setInterval(() => {
+      progress += 2;
+      const offset = 138 - (progress / 100) * 138;
+      ring.setAttribute('stroke-dashoffset', offset);
+
+      if (progress >= 100) {
+        clearInterval(interval);
+        ring.style.display = 'none';
+        const link = document.createElement('a');
+        link.href = file;
+        link.download = '';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    }, 40);
+  }
+</script></body>
+</html>
+# Echo Drift Band 🎸🎤
+
+Welcome to the *official website of Echo Drift Band* — a passionate music group creating uplifting, modern, and traditional soundscapes.
+
+## 🌍 What This Site Offers
+
+- 🎧 *Listen* to our latest songs directly from the site
+- ⬇ *Download* music to your phone or SD card
+- 🖼 *View band photos* in the “Photos” section
+- 📅 *Stay updated* with all our band activities
+
+## 📁 Project Files
+
+- index.html – Main website page
+- logo.jpg – Echo Drift Band logo
+- song1.mp3 – Sample song
+- singer1.jpg – Artist image for demo
+- README.md – This file
+
+## 🛠 How to Use
+
+1. Open index.html in your browser to test locally
+2. Upload all files to GitHub
+3. Enable GitHub Pages under *Settings > Pages*
+4. Share your public site link!
+
+## 🌐 Live Website (after hosting)
+
+> Coming soon: https://yourusername.github.io/echo-drift-band
+
+## 💬 Contact & Feedback
+
+We’d love to hear from fans! Reach us at:
+- Email: *echodriftband@example.com*
+- Instagram: @echodriftband
+- Facebook: Echo Drift Band
+
+---
+
+🎶 Echo Drift Band – Shaping Sound, Sharing Soul.
+# macOS system files
+.DS_Store
+
+# Windows system files
+Thumbs.db
+desktop.ini
+
+# Logs and temp files
+*.log
+*.tmp
+
+# IDE and editor folders
+.vscode/
+.idea/
+
+# Node modules (if you ever add tools like React later)
+node_modules/
+
+# Backup files
+*.bak
+*.old
+*.swp
+
+# Git backup
+*.orig
