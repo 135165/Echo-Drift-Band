@@ -1,214 +1,427 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Echo Drift - Free Music Search</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+      margin-right: 10px;
+    }
+    .track {
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+    audio {
+      width: 100%;
+      margin-top: 10px;
+    }
+ </style>
+</head>
+<body>
+
+  <h1>🎵 Echo Drift Band</h1>
+  <h2>🔍 Search Free Songs (Powered by Pixabay)</h2>
+
+  <input type="text" id="searchBox" placeholder="Enter song keyword (e.g. gospel)" />
+  <button onclick="searchPixabay()">Search</button>
+
+  <div id="results" style="margin-top:20px;">Search results will appear here.</div>
+
+  <script>
+    function searchPixabay() {
+      const query = document.getElementById("searchBox").value.trim();
+      const apiKey = "50777340-cf7c49d656c3c01b641dc8507"; // Your actual key
+
+      if (!query) {
+        alert("Please enter a keyword.");
+        return;
+      }
+
+ const url = https://pixabay.com/api/audio/?key=${apiKey}&q=${encodeURIComponent(query)}&per_page=10;
+
+      fetch(url)
+        .then(res => res.json())
+        .then(data => {
+          const resultsDiv = document.getElementById("results");
+          resultsDiv.innerHTML = "";
+
+          if (!data.hits || data.hits.length === 0) {
+            resultsDiv.innerHTML = "No songs found.";
+            return;
+          }
+
+          data.hits.forEach(track => {
+            const div = document.createElement("div");
+            div.classList.add("track");
+            div.innerHTML = `
+              <strong>${track.tags}</strong><br>
+              🎧 Duration: ${Math.floor(track.duration / 60)}m ${track.duration % 60}s<br>
+              <audio controls src="${track.audio}"></audio><br>
+              <a href="${track.audio}" download>⬇ Download</a>
+            `;
+            resultsDiv.appendChild(div);
+          });
+        })
+.catch(err => {
+          document.getElementById("results").innerHTML = "Error fetching songs.";
+          console.error(err);
+        });
+    }
+  </script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Echo Drift Band</title>
   <style>
     body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: #121212;
-      color: #fff;
+      padding: 0;
     }
     header {
-      display: flex;
-      align-items: center;
-      padding: 10px 20px;
-      background: #1f1f1f;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-    }
-    header img {
-      height: 40px;
-      border-radius: 8px;
+      background-color: #333;
+      color: white;
+      padding: 20px;
+      text-align: center;
     }
     header h1 {
-      margin-left: 15px;
-      font-size: 24px;
-    }
-    .song-card {
-      display: flex;
-      align-items: center;
-      background: #1e1e1e;
-      margin: 15px;
-      padding: 15px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px #000;
-    }
-    .song-card {
-      display: flex;
-      align-items: center;
-      background: #1e1e1e;
-      margin: 15px;
-      padding: 15px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px #000;
-    }
-    .song-card img {
-      width: 60px;
-      height: 60px;
-      border-radius: 8px;
-      object-fit: cover;
-    }
-    .song-info {
-      flex: 1;
-      margin-left: 15px;
-    }
-    .song-info h3 {
       margin: 0;
-      font-size: 18px;
     }
-    .song-actions {
-      display: flex;
-      align-items: center;
+    section {
+      padding: 20px;
     }
-    .song-actions button {
-      margin-left: 10px;
-      background: #00cc66;
-      color: white;
-      border: none;
+    .bio, .social, .latest-songs, .gallery {
+      margin-bottom: 40px;
+    }
+  .bio, .social, .latest-songs, .gallery {
+      margin-bottom: 40px;
+    }
+    .bio img {
+      width: 100%;
+      max-width: 300px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    .latest-songs ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    .latest-songs li {
+      background-color: #fff;
       padding: 10px;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 16px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     }
-    .song-actions .circle {
-      position: relative;
-      width: 50px;
-      height: 50px;
+    .latest-songs li a {
+      text-decoration: none;
+      color: #333;
     }
-    .song-actions svg {
-      position: absolute;
-      top: 0;
-      left: 0;
+  .gallery img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin: 10px 0;
     }
-</style>
+    .social a {
+      margin: 0 10px;
+      font-size: 20px;
+      color: #333;
+      text-decoration: none;
+    }
+    footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 10px;
+    }
+  </style>
 </head>
-<body><header>
-  <img src="logo.jpg" alt="Echo Drift Logo">
-  <h1>Echo Drift Band</h1>
-</header><div class="song-card">
-  <img src="singer1.jpg" alt="Singer">
-  <div class="song-info">
-    <h3>Echo Drift – Fire In Me</h3>
-    <audio id="player1" src="song1.mp3"></audio>
-  </div>
-  <div class="song-actions">
-    <button id="playBtn1" onclick="togglePlay('player1', 'playBtn1')">▶</button>
-    <div class="circle">
-      <svg width="50" height="50">
-        <circle id="ring1" cx="25" cy="25" r="22" stroke="#00ffcc" stroke-width="4" fill="none"
-          stroke-dasharray="138" stroke-dashoffset="138" style="transition: stroke-dashoffset 0.2s;"></circle>
-      </svg>
-      <button onclick="startDownload('song1.mp3','ring1')" style="position:absolute; top:0; left:0; width:100%; height:100%; border:none; background:none; color:white;">⬇</button>
+<body>
+ <header>
+    <h1>🎵 Welcome to Echo Drift Band</h1>
+    <p>Your number one source for modern and traditional music</p>
+  </header>
+
+  <!-- Band Bio Section -->
+  <section class="bio">
+    <h2>About Echo Drift</h2>
+    <div>
+      <img src="singer1.jpg" alt="Singer Photo">
+      <p>Echo Drift Band is a unique blend of traditional and modern sounds, from gospel to Afrobeat. We bring the best of both worlds into our performances, making every show memorable!</p>
     </div>
-</div>
-</div><script>
-function togglePlay(playerId, btnId) {
-  const player = document.getElementById(playerId);
-  const button = document.getElementById(btnId);
+  </section>
 
-  document.querySelectorAll('audio').forEach(audio => {
-    if (audio.id !== playerId) audio.pause();
-  });
-  document.querySelectorAll('button').forEach(btn => {
-    if (btn.id !== btnId && btn.textContent === "⏸") btn.textContent = "▶";
-  });
+  <!-- Latest Songs Section -->
+  <section class="latest-songs">
+    <h2>Latest Songs</h2>
+    <ul>
+      <li>
+        <strong>Song Title 1</strong><br>
+        <audio controls src="song1.mp3"></audio><br>
+        <a href="song1.mp3" download>⬇ Download Song</a>
+      </li>
+      <li>
+        <strong>Song Title 2</strong><br>
+        <audio controls src="song2.mp3"></audio><br>
+        <a href="song2.mp3" download>⬇ Download Song</a>
+      </li>
+ </ul>
+  </section>
 
-  if (player.paused) {
-    player.play();
-    button.textContent = "⏸";
-  } else {
-    player.pause();
-    button.textContent = "▶";
-  }
-}
-function startDownload(file, ringId) {
-    const ring = document.getElementById(ringId);
-    ring.style.display = 'block';
-    ring.setAttribute('stroke-dashoffset', '138');
+  <!-- Photo Gallery Section -->
+  <section class="gallery">
+    <h2>Photo Gallery</h2>
+    <img src="photo1.jpg" alt="Performance 1">
+    <img src="photo2.jpg" alt="Performance 2">
+    <img src="photo3.jpg" alt="Performance 3">
+  </section>
 
-    let progress = 0;
-    const interval = setInterval(() => {
-      progress += 2;
-      const offset = 138 - (progress / 100) * 138;
-      ring.setAttribute('stroke-dashoffset', offset);
+  <!-- Social Media Links -->
+  <section class="social">
+    <h2>Follow Us</h2>
+    <a href="https://facebook.com/EchoDriftBand" target="_blank">Facebook</a>
+    <a href="https://instagram.com/EchoDriftBand" target="_blank">Instagram</a>
+    <a href="https://youtube.com/EchoDriftBand" target="_blank">YouTube</a>
+  </section>
 
-      if (progress >= 100) {
-        clearInterval(interval);
-        ring.style.display = 'none';
-        const link = document.createElement('a');
-        link.href = file;
-        link.download = '';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      }
-    }, 40);
-  }
-</script></body>
+ <!-- Contact Form Section -->
+  <section class="contact">
+    <h2>Contact Us</h2>
+    <form action="contact_form.php" method="post">
+      <label for="name">Your Name</label><br>
+      <input type="text" id="name" name="name" required><br><br>
+
+      <label for="email">Your Email</label><br>
+      <input type="email" id="email" name="email" required><br><br>
+
+      <label for="message">Message</label><br>
+      <textarea id="message" name="message" rows="4" required></textarea><br><br>
+
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Echo Drift Band. All rights reserved.</p>
+  </footer>
+
+</body>
 </html>
-# Echo Drift Band 🎸🎤
+<a href="javascript:void(0);" class="home-button" onclick="showContactOptions()">🏠 Home</a>
 
-Welcome to the *official website of Echo Drift Band* — a passionate music group creating uplifting, modern, and traditional soundscapes.
+<!-- Modal for Contact Options -->
+<div id="contactModal" class="contact-modal">
+  <div class="contact-modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h2>Contact Echo Drift Band</h2>
+    <p><strong>WhatsApp:</strong> <a href="https://wa.me/254746966467" target="_blank">0746966467</a></p>
+    <p><strong>Bookings:</strong> <a href="mailto:shadrackomemu@gmail.com">shadrackomemu@gmail.com</a></p>
+    <p>Click the WhatsApp link to instantly chat with us and book Echo Drift Band for your next event!</p>
+  </div>
+</div>
 
-## 🌍 What This Site Offers
+<style>
+  .home-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #1e88e5;
+    color: white;
+    padding: 10px 18px;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+  }
 
-- 🎧 *Listen* to our latest songs directly from the site
-- ⬇ *Download* music to your phone or SD card
-- 🖼 *View band photos* in the “Photos” section
-- 📅 *Stay updated* with all our band activities
+  .home-button:hover {
+    background-color: #1565c0;
+    transform: scale(1.05);
+  }
+ /* Modal Styles */
+  .contact-modal {
+    display: none; 
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+    padding-top: 60px;
+  }
 
-## 📁 Project Files
+  .contact-modal-content {
+    background-color: #fff;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 400px;
+    border-radius: 8px;
+  }
 
-- index.html – Main website page
-- logo.jpg – Echo Drift Band logo
-- song1.mp3 – Sample song
-- singer1.jpg – Artist image for demo
-- README.md – This file
+ .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
 
-## 🛠 How to Use
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+</style>
 
-1. Open index.html in your browser to test locally
-2. Upload all files to GitHub
-3. Enable GitHub Pages under *Settings > Pages*
-4. Share your public site link!
+<script>
+  // Show the contact modal
+  function showContactOptions() {
+    document.getElementById("contactModal").style.display = "block";
+  }
 
-## 🌐 Live Website (after hosting)
+  // Close the contact modal
+  function closeModal() {
+    document.getElementById("contactModal").style.display = "none";
+  }
+</script>
+<!-- Upload Button (visible only to the admin) -->
+<a href="javascript:void(0);" class="upload-button" onclick="showUploadForm()">📤 Upload Content</a>
 
-> Coming soon: https://yourusername.github.io/echo-drift-band
+<!-- Password Prompt for Upload -->
+<div id="passwordModal" class="password-modal">
+  <div class="password-modal-content">
+    <span class="close" onclick="closePasswordModal()">&times;</span>
+    <h2>Admin Password</h2>
+    <input type="password" id="adminPassword" placeholder="Enter Password">
+    <button onclick="verifyPassword()">Submit</button>
+  </div>
+</div>
 
-## 💬 Contact & Feedback
+<!-- File Upload Form -->
+<div id="uploadForm" class="upload-form">
+  <form action="upload.php" method="POST" enctype="multipart/form-data">
+    <label for="fileUpload">Choose files to upload (Audio, Video, Image):</label>
+    <input type="file" name="fileUpload[]" id="fileUpload" multiple>
+    <button type="submit" name="upload" class="upload-submit">Upload</button>
+  </form>
+</div>
 
-We’d love to hear from fans! Reach us at:
-- Email: *echodriftband@example.com*
-- Instagram: @echodriftband
-- Facebook: Echo Drift Band
+<style>
+  .upload-button {
+    position: absolute;
+    top: 20px;
+    right: 100px;
+    background-color: #ff7043;
+    color: white;
+    padding: 10px 18px;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+.upload-button:hover {
+    background-color: #e64a19;
+    transform: scale(1.05);
+  }
 
----
+  /* Modal Styles for Password Prompt */
+  .password-modal {
+    display: none; 
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+    padding-top: 60px;
+  }
 
-🎶 Echo Drift Band – Shaping Sound, Sharing Soul.
-# macOS system files
-.DS_Store
+  .password-modal-content {
+    background-color: #fff;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+    max-width: 400px;
+    border-radius: 8px;
+  }
+.upload-form {
+    display: none;
+    margin-top: 20px;
+  }
 
-# Windows system files
-Thumbs.db
-desktop.ini
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
 
-# Logs and temp files
-*.log
-*.tmp
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+ input[type="password"] {
+    padding: 10px;
+    width: 80%;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+</style>
 
-# IDE and editor folders
-.vscode/
-.idea/
+<script>
+  // Show the password prompt modal
+  function showUploadForm() {
+    document.getElementById("passwordModal").style.display = "block";
+  }
 
-# Node modules (if you ever add tools like React later)
-node_modules/
+  // Close the password prompt modal
+  function closePasswordModal() {
+    document.getElementById("passwordModal").style.display = "none";
+  }
+ // Verify the password and show the upload form
+  function verifyPassword() {
+    const password = document.getElementById("adminPassword").value;
+    const correctPassword = "EchoAdmin2025";
+    
+    if (password === correctPassword) {
+      document.getElementById("passwordModal").style.display = "none";
+      document.getElementById("uploadForm").style.display = "block";
+    } else {
+      alert("Incorrect password. Please try again.");
+    }
+  }
+</script>
 
-# Backup files
-*.bak
-*.old
-*.swp
-
-# Git backup
-*.orig
+ 
